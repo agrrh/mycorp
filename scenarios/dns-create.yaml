@@ -1,0 +1,42 @@
+---
+kind: Scenario
+version: mycorp.agrrh.com/v1alpha1
+
+metadata:
+  name: create
+  namespace: dns
+
+spec:
+  aliases:
+    - upsert
+    - update
+
+  inputs:
+    - name: zone
+
+    - name: type
+      type: enum
+      values:
+        - A
+        - CNAME
+      default: A
+
+    - name: name
+
+    - name: value
+
+    - name: ttl
+      default: 3600
+
+  steps:
+    # Call remote API
+    - name: Call service
+      module: http
+
+  output: |-
+    Created PR for requested DNS record:
+        https://github.com/kelseyhightower/nocode/pull/105
+
+  # access:
+  #   allow: []
+  #   deny: []

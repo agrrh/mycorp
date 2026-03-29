@@ -1,0 +1,165 @@
+---
+# NOTE: This looks like, but is not actually a Kubernetes manifest
+
+kind: Scenario
+version: mycorp.agrrh.com/v1alpha1
+
+metadata:
+  name: example
+
+  # For now namespace would just define prefix
+  namespace: default
+
+  # Following naming results in handler:
+  # https://mycorp.example.org/scenario/default/run-deploy
+
+spec:
+  ################################################################
+  # Aliases
+  ################################################################
+
+  aliases:
+    - deploy
+    - rollout
+
+  ################################################################
+  # Inputs
+  ################################################################
+
+  inputs:
+    # minimal input variable
+    - name: message # string, required
+
+    # predefined list
+    - name: environment
+      # some shortcuts
+      aliases:
+        - e
+        - env
+      type: enum
+      values:
+        - dev
+        - prod
+      default: dev # stating default value makes param optional
+
+    # Controller is capable of determining expected types based on some specs:
+    # - default value
+    # - validation rules
+    # So, operator may safely omit "type" when those are specified
+
+    # required string, validated with regexp
+    - name: branch
+      regexp: "^(main|master|fix/.+)$"
+
+    # optional bool
+    - name: clear-cache
+      default: false
+
+    # required int
+    - name: replicas
+      default: 2
+
+    # required float
+    - name: resources-ratio
+      default: 1.5
+
+  steps:
+    # Call remote API
+    - name: Call service
+      module: http
+
+    # Execute command in local container
+    # TODO: Implement
+    # - name: Clone repo
+    #   module: git-clone
+    # - name: Render manifest
+    #   module: template
+    # - name: Apply manifest
+    #   module: kubectl-apply
+
+    # Clone repo, edit file, push back
+    # TODO: Implement
+    # - name: Clone repo
+    #   module: git-clone
+    # - name: Edit IaC file
+    #   module: edit
+    # - name: Commit back
+    #   module: git-commit
+    # - name: Push changes
+    #   module: git-push
+    # - name: Open Pull Request
+    #   module: git-open-pr
+
+  ################################################################
+  # Output
+  ################################################################
+
+  output: |-
+    Just a static message.
+
+  # TODO: Implement
+  # output: |
+  #   Templated output!
+  #
+  #   {% if steps["Call service"].response_code == 201 %}
+  #   Job started: {{ steps["Call service"].json.job_url }}
+  #   {% else %}
+  #   Job failed to start: {{ steps["Call service"].body }}
+  #   {% end %}
+
+  ################################################################
+  # ACLs
+  ################################################################
+
+  # Provide controller with ACL rules, not exposed to client
+  access:
+    # Allow anonymous calls (not recommended for production usage!)
+    allow: []
+    deny: []
+
+    # Allow specific tokens
+    # TODO: Implement
+    # allow:
+    #   - token1
+    #   - token2
+    # deny: []
+
+    # Using SSO, allow username and group
+    # TODO: Implement
+    # allow:
+    #   - user1
+    #   - user2
+    #   - group1
+    #   - group2
+    # deny: []
+
+    # Using SSO, allow group, except subgroup
+    # TODO: Implement
+    # allow:
+    #   - group-foo
+    # deny:
+    #   - group-bar
+
+    # Allow cross-service calls using mTLS
+    # TODO: Implement
+    # allow:
+    #   - service1
+    # deny:
+    #   - service2
+
+    # Combined list: tokens, SSO, mTLS
+    # TODO: Implement
+    # allow:
+    #   - token1
+    #   - token2
+    #   - user1
+    #   - user2
+    #   - group1
+    #   - group2
+    #   - service1
+    #   - service2
+    # deny:
+    #   - token3
+    #   - user3
+    #   - group3
+    #   - service3

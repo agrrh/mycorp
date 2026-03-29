@@ -1,33 +1,78 @@
 # MyCorp
 
-## Info
+## Overview
 
-MyCorp is a simple Internal Developer Platform.
+MyCorp is an open-source Internal Developer Platform (IDP).
 
-## Design
+It provides a unified interface for developers to manage internal resources.
+
+Operators (platform engineers) define declarative scenarios in YAML format.
+
+Those Scenarios are then executed by the CLI tool to manage resources like virtual machines, DNS records, and databases.
 
 ```mermaid
-graph LR
-  engineer(Engineer)
+sequenceDiagram
+    box gray User expertise & visibility scope
+        participant developer
+        participant cli
+    end
 
-  subgraph git-repo
-    app.yaml[.mycorp/app.yaml]
-  end
+    participant developer as 👩🏻‍💻 Developer
+    participant operator as 👨‍💻 Operator
 
-  subgraph kubernetes
-    ui
-    controller
-    application[Application]
-  end
+    participant scenario as 📄 Scenario
+    
+    participant cli as 💻 CLI
+    participant api as ⚙️ API
 
-  engineer --> |1. set desired state| app.yaml
+    participant iac as ☁️ IaC Provider
 
-  controller --> |2. watch for updates| git-repo
-  controller --> |3. sync state| application
+    %% Flow
 
-  engineer -.-> |4. observe state| ui -.- controller
+    operator ->> scenario: write declarative Scenarios
+    api -->> scenario: Get actual Scenario steps
+
+    cli ->> api: requests actual scenarios
+    developer ->>+ cli: "Create DNS Record"
+    cli -->> api: calls Scenario run
+    api -->> iac: create resource
+    iac -->> api: response
+    api -->> cli: returns IaC response data
+    cli ->>- developer: outputs result
 ```
 
-## Roadmap
+## Key Features
+
+- **Platform-first approach**: Scenarios are dynamically fetched via API and CLI, ensuring users always interact with the latest interface specifications
+
+- **Terminal-centric design**: The CLI tool offers powerful operation capabilities through structured commands, with features like help messages, strict call formatting, and autocompletion
+
+- **Declarative workflow**: Operators define resource management scenarios using YAML, while Users execute these scenarios through the CLI
+
+## Architecture
+
+```mermaid
+graph TD
+  operator[Operator] --> |1. Define scenarios| scenarios[scenarios/]
+  operator --> |2. Use CLI| cli[cmd/]
+  
+  user[User] --> |3. Use CLI| cli
+  cli --> |4. Interact with API| api[server/]
+  api --> |5. Process scenarios| controller[internal/]
+  
+  controller --> |6. Sync state| application[Application]
+  user --> |7. Observe state| ui[cmd/]
+```
+
+## Project Structure
+
+```
+├── cmd/             # Command-line interface for Users and API server
+├── internal/        # Internal models, services, and utility packages
+├── pkg/             # Publicly available packages (e.g. models)
+└── scenarios/       # Scenario definitions for different resource types
+```
+
+## Contribution
 
 [GitHub Issues & Milestones](https://github.com/agrrh/mycorp/milestones)
