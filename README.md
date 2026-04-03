@@ -30,16 +30,14 @@ sequenceDiagram
     participant developer as 👩🏻‍💻 Developer
     participant operator as 👨‍💻 Operator
 
-    participant scenario as 📄 Scenario
-    
-    participant cli as 💻 CLI
-    participant api as ⚙️ API
+    participant cli as 💻 MyCorp CLI
+    participant api as ⚙️ MyCorp API
 
     participant iac as ☁️ IaC Provider
 
     %% Flow
 
-    operator ->> scenario: write declarative Scenarios
+    operator ->> api: write declarative Scenarios
     api -->> scenario: Get actual Scenario steps
 
     cli ->> api: requests actual scenarios
