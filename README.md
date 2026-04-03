@@ -38,7 +38,6 @@ sequenceDiagram
     %% Flow
 
     operator ->> api: write declarative Scenarios
-    api -->> scenario: Get actual Scenario steps
 
     cli ->> api: requests actual scenarios
     developer ->>+ cli: "Create DNS Record"
