@@ -1,8 +1,8 @@
-package models
+package scenario
 
 import "fmt"
 
-type ScenarioSpecInputParameter struct {
+type SpecInputParameter struct {
 	Name        string   `yaml:"name" json:"name"`
 	Description string   `yaml:"description,omitempty" json:"description,omitempty"`
 	Type        string   `yaml:"type,omitempty" json:"type,omitempty"`
@@ -13,7 +13,7 @@ type ScenarioSpecInputParameter struct {
 	Optional    bool     `yaml:"optional,omitempty" json:"optional,omitempty"`
 }
 
-func (ip *ScenarioSpecInputParameter) GetCLIDescription() string {
+func (ip *SpecInputParameter) GetCLIDescription() string {
 	if ip.Description != "" {
 		return ip.Description
 	}

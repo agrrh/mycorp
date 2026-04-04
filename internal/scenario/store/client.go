@@ -1,4 +1,4 @@
-package scenario_store
+package store
 
 import (
 	"encoding/json"
@@ -7,25 +7,18 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/agrrh/mycorp/pkg/models"
-)
-
-var (
-	errFetch                  error = errors.New("Failed to fetch scenarios")
-	errReadResponse           error = errors.New("Failed to read scenarios response body")
-	errParse                  error = errors.New("Failed to parse scenarios JSON")
-	errObtainSpecificScenario error = errors.New("Failed to obtain specific scenario")
+	"github.com/agrrh/mycorp/internal/scenario"
 )
 
 type ScenarioStoreCLI struct {
 	URL       string
-	Scenarios map[string]models.CLIScenario
+	Scenarios map[string]scenario.ScenarioCLI
 }
 
 func NewCLI(url string) *ScenarioStoreCLI {
 	ssc := &ScenarioStoreCLI{
 		URL:       url,
-		Scenarios: make(map[string]models.CLIScenario),
+		Scenarios: make(map[string]scenario.ScenarioCLI),
 	}
 
 	return ssc
@@ -66,7 +59,7 @@ func (ssc *ScenarioStoreCLI) Fetch() error {
 			return errors.Join(errObtainSpecificScenario, errReadResponse, err)
 		}
 
-		var sc models.CLIScenario
+		var sc scenario.ScenarioCLI
 		if err := json.Unmarshal(body, &sc); err != nil {
 			return errors.Join(errObtainSpecificScenario, errParse, err)
 		}
@@ -79,8 +72,8 @@ func (ssc *ScenarioStoreCLI) Fetch() error {
 	return nil
 }
 
-func (ssc *ScenarioStoreCLI) List() []*models.CLIScenario {
-	var scList []*models.CLIScenario
+func (ssc *ScenarioStoreCLI) List() []*scenario.ScenarioCLI {
+	var scList []*scenario.ScenarioCLI
 
 	for _, sc := range ssc.Scenarios {
 		scList = append(scList, &sc)

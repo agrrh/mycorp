@@ -5,6 +5,8 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+
+	"github.com/agrrh/mycorp/internal/worker"
 )
 
 func (h *Handler) Run(ctx echo.Context) error {
@@ -14,8 +16,19 @@ func (h *Handler) Run(ctx echo.Context) error {
 		ctx.Param("name"),
 	)
 
+	w := worker.New()
+
 	if sc, exists := h.ScStore.Scenarios[scName]; exists {
-		return ctx.String(http.StatusOK, string(sc.Spec.Output))
+		results, err := w.RunScenario(&sc)
+
+		// TODO: Enrich output data with Scenario Output format
+		out := fmt.Sprintf("%v+", results)
+
+		if err != nil {
+			return ctx.String(http.StatusInternalServerError, out)
+		}
+
+		return ctx.String(http.StatusOK, out)
 	}
 
 	return ctx.JSON(http.StatusNotFound, nil)

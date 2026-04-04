@@ -1,0 +1,12 @@
+---
+version: "3"
+
+tasks:
+  server:run:
+    cmd: >-
+      air \
+        --build.cmd "go build -o tmp/server cmd/server/main.go" \
+        --build.entrypoint "tmp/server" \
+        --build.include_dir "cmd,internal,pkg,scenarios" \
+        --build.include_ext "go,tpl,tmpl,html,yaml"
+    desc: Run local server

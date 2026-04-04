@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"github.com/agrrh/mycorp/internal/scenario_store"
+	"github.com/agrrh/mycorp/internal/scenario/store"
 )
 
 type Handler struct {
-	ScStore *scenario_store.ScenarioStore
+	ScStore *store.ScenarioStore
 }

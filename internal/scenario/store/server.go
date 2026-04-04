@@ -1,7 +1,6 @@
-package scenario_store
+package store
 
 import (
-	"errors"
 	"log"
 	"os"
 	"path/filepath"
@@ -9,20 +8,18 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"github.com/agrrh/mycorp/pkg/models"
+	"github.com/agrrh/mycorp/internal/scenario"
 )
-
-var errDuplicateScenarios = errors.New("duplicate scenarios")
 
 type ScenarioStore struct {
 	Dir       string
-	Scenarios map[string]models.Scenario
+	Scenarios map[string]scenario.Scenario
 }
 
 func New(dir string) *ScenarioStore {
 	scStore := &ScenarioStore{
 		Dir:       dir,
-		Scenarios: make(map[string]models.Scenario),
+		Scenarios: make(map[string]scenario.Scenario),
 	}
 
 	return scStore
@@ -45,7 +42,7 @@ func (ss *ScenarioStore) Load() error {
 			continue
 		}
 
-		var sc models.Scenario
+		var sc scenario.Scenario
 		if err := yaml.Unmarshal(data, &sc); err != nil {
 			log.Printf("failed to parse %s: %v", e.Name(), err)
 			continue
@@ -71,8 +68,8 @@ func (ss *ScenarioStore) Load() error {
 	return nil
 }
 
-func (ss *ScenarioStore) List() []*models.Scenario {
-	var scList []*models.Scenario
+func (ss *ScenarioStore) List() []*scenario.Scenario {
+	var scList []*scenario.Scenario
 
 	for _, sc := range ss.Scenarios {
 		scList = append(scList, &sc)
@@ -81,8 +78,8 @@ func (ss *ScenarioStore) List() []*models.Scenario {
 	return scList
 }
 
-func (ss *ScenarioStore) ListByNamespace(namespace string) []*models.Scenario {
-	var scList []*models.Scenario
+func (ss *ScenarioStore) ListByNamespace(namespace string) []*scenario.Scenario {
+	var scList []*scenario.Scenario
 
 	for _, sc := range ss.Scenarios {
 		if sc.Metadata.Namespace == namespace {

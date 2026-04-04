@@ -32,6 +32,8 @@ spec:
     # Call remote API
     - name: Call service
       module: http
+      params:
+        url: http://example.com/absent
 
   output: |-
     Created PR for requested DNS record:

@@ -8,8 +8,8 @@ import (
 	"github.com/ledongthuc/goterators"
 	"github.com/spf13/cobra"
 
-	"github.com/agrrh/mycorp/internal/scenario_store"
-	"github.com/agrrh/mycorp/pkg/models"
+	"github.com/agrrh/mycorp/internal/scenario"
+	"github.com/agrrh/mycorp/internal/scenario/store"
 )
 
 func main() {
@@ -18,19 +18,21 @@ func main() {
 		Short: "MyCorp CLI Tool",
 	}
 
-	scenariosURL := os.Getenv("MYCORP_CLI_SCENARIOS_URL")
-	if scenariosURL == "" {
-		fmt.Fprintf(os.Stderr, "Environment variable MYCORP_CLI_SCENARIOS_URL is required\n")
+	baseURL := os.Getenv("MYCORP_CLI_URL")
+	if baseURL == "" {
+		fmt.Fprintf(os.Stderr, "Environment variable MYCORP_CLI_URL is required\n")
 		os.Exit(1)
 	}
 
-	scStore := scenario_store.NewCLI(scenariosURL)
+	scenariosURL := fmt.Sprintf("%s/scenarios", baseURL)
+
+	scStore := store.NewCLI(scenariosURL)
 
 	if err := scStore.Fetch(); err != nil {
 		log.Fatal(err)
 	}
 
-	commandGroups := goterators.Group(scStore.List(), func(sc *models.CLIScenario) string {
+	commandGroups := goterators.Group(scStore.List(), func(sc *scenario.ScenarioCLI) string {
 		return sc.Metadata.Namespace
 	})
 
@@ -68,7 +70,7 @@ func main() {
 				var output string
 				err := sc.Run(
 					fmt.Sprintf("%s/%s", scenariosURL, sc.Metadata.GetFullName()),
-					(*models.ScenarioCLIOutputData)(&output),
+					(*scenario.CLIOutputData)(&output),
 				)
 				if err != nil {
 					fmt.Printf("Error running command %s: %s\n", sc.Metadata.GetFullName(), err)

@@ -1,4 +1,4 @@
-package models
+package scenario
 
 import (
 	"bytes"
@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+
+	"github.com/agrrh/mycorp/internal/metadata"
 )
 
 var (
@@ -14,20 +16,20 @@ var (
 	// errParseResponse error = errors.New("Error parsing scenario call response")
 )
 
-type CLIScenario struct {
-	Metadata Metadata        `yaml:"metadata" json:"metadata"`
-	Spec     CLIScenarioSpec `yaml:"spec" json:"spec"`
+type ScenarioCLI struct {
+	Metadata metadata.Metadata `yaml:"metadata" json:"metadata"`
+	Spec     CLISpec           `yaml:"spec" json:"spec"`
 }
 
-type CLIScenarioSpec struct {
-	Inputs []ScenarioSpecInputParameter `yaml:"inputs" json:"inputs"`
-	Output ScenarioSpecOutput           `yaml:"output,omitempty" json:"output"`
+type CLISpec struct {
+	Inputs []SpecInputParameter `yaml:"inputs" json:"inputs"`
+	Output SpecOutput           `yaml:"output,omitempty" json:"output"`
 }
 
-// Static output or variables for templated `ScenarioSpecOutput` string
-type ScenarioCLIOutputData string
+// Static output or variables for templated `SpecOutput` string
+type CLIOutputData string
 
-func (cs *CLIScenario) Run(url string, output *ScenarioCLIOutputData) error {
+func (sc *ScenarioCLI) Run(url string, output *CLIOutputData) error {
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(nil))
 	if err != nil {
 		return errors.Join(errCall, err)
@@ -45,7 +47,7 @@ func (cs *CLIScenario) Run(url string, output *ScenarioCLIOutputData) error {
 
 	fmt.Printf("%s", string(body[:]))
 
-	tmp := ScenarioCLIOutputData(string(body[:]))
+	tmp := CLIOutputData(string(body[:]))
 	output = &tmp
 
 	return nil

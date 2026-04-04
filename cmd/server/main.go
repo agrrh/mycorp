@@ -12,7 +12,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 
 	handlerScenarios "github.com/agrrh/mycorp/internal/handlers/scenarios"
-	"github.com/agrrh/mycorp/internal/scenario_store"
+	"github.com/agrrh/mycorp/internal/scenario/store"
 )
 
 func main() {
@@ -21,7 +21,7 @@ func main() {
 		scenarioDir = "./scenarios"
 	}
 
-	scStore := scenario_store.New(scenarioDir)
+	scStore := store.New(scenarioDir)
 
 	if err := scStore.Load(); err != nil {
 		log.Fatal(err)

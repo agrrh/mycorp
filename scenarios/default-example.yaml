@@ -67,6 +67,8 @@ spec:
     # Call remote API
     - name: Call service
       module: http
+      params:
+        url: hello
 
     # Execute command in local container
     # TODO: Implement
