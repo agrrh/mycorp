@@ -11,6 +11,5 @@ type StepResults map[string]any
 type PrevStepsResults map[string]StepResults
 
 type Module interface {
-	New() *Module
 	Run(ctx context.Context, stepName string, scInputs scenario.SpecInputs, stepParams scenario.SpecStepParams, prevStepResults PrevStepsResults) (StepResults, error)
 }
