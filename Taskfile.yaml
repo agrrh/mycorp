@@ -17,6 +17,17 @@ tasks:
       - check:vet
       - check:lint
 
+  server:build:ci:
+    deps:
+      - check
+      - server:build
+
+  server:build:
+    cmd: >-
+      go build \
+        -o tmp/mycorp-server \
+        cmd/server/main.go
+
   server:run:
     deps:
       - check

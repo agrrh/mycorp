@@ -3,7 +3,8 @@
 - [x] Disable push to master, switch to PR-based workflow
 
 - [x] Code linting and formatting
-- [ ] Add CI/CD
+- [x] Add Dockerfile
+- [x] Add CI/CD builds
 
 - [ ] Add scenario validation
 - [ ] API parameter type handling
@@ -22,8 +23,6 @@
 
 - [ ] Local execution support?
 
-
-- [ ] Add Dockerfile
 - [ ] Add e2e tests
 
 - [ ] Add documentation
