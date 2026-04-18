@@ -1,33 +1,33 @@
-# План работ по развитию MyCorp
+# Development Roadmap
 
-- [x] Запрет на push в master, переход на работу через PR-ы
+- [x] Disable push to master, switch to PR-based workflow
 
-- [ ] Линтинг и форматирование кода
-- [ ] Добавление CI/CD
+- [ ] Code linting and formatting
+- [ ] Add CI/CD
 
-- [ ] Добавление валидации сценариев
-- [ ] Обработка типов параметров в API
+- [ ] Add scenario validation
+- [ ] API parameter type handling
 
-- [ ] Реализация темплейтированного вывода
-- [ ] Форматированный вывод результата выполнения сценария
-- [ ] JSON сериализация в ответе выполнения сценария
+- [ ] Implement templated output
+- [ ] Formatted scenario execution result output
+- [ ] JSON serialization in scenario execution response
 
-- [ ] Реализация модуля `command` для прямого выполнения команд
-- [ ] Реализация модуля `git` для работы с удаленной кодовой базой
+- [ ] Implement `command` module for direct command execution
+- [ ] Implement `git` module for remote codebase operations
 
-- [ ] Реализация SSO аутентификации
+- [ ] Implement SSO authentication
 
-- [ ] Генерация Kubernetes CRD
-- [ ] Получение сценариев из CRD
+- [ ] Generate Kubernetes CRD
+- [ ] Retrieve scenarios from CRD
 
-- [ ] Возможность локального запуска?
+- [ ] Local execution support?
 
 
-- [ ] Добавление Dockerfile
-- [ ] Добавление e2e тестов
+- [ ] Add Dockerfile
+- [ ] Add e2e tests
 
-- [ ] Добавление документации
+- [ ] Add documentation
 
-- [ ] Добавление поддержки aliases для сценариев
-- [ ] Генерация описания использования команд
-- [ ] Поддержка сторонних модулей
+- [ ] Add support for scenario aliases
+- [ ] Generate command usage descriptions
+- [ ] Support external modules
