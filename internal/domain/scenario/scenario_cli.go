@@ -9,9 +9,9 @@ import (
 )
 
 var (
-	errCall         error = errors.New("Error calling scenario")
-	errReadResponse error = errors.New("Error reading scenario call response")
-	// errParseResponse error = errors.New("Error parsing scenario call response")
+	errCall         error = errors.New("error calling scenario")
+	errReadResponse error = errors.New("error reading scenario call response")
+	// errParseResponse error = errors.New("error parsing scenario call response")
 )
 
 type ScenarioCLI struct {
@@ -28,12 +28,10 @@ type CLISpec struct {
 type CLIOutputData string
 
 func (sc *ScenarioCLI) FromScenario(s *Scenario) error {
-	sc = &ScenarioCLI{
-		Metadata: s.Metadata,
-		Spec: CLISpec{
-			Inputs: s.Spec.Inputs,
-			Output: s.Spec.Output,
-		},
+	sc.Metadata = s.Metadata
+	sc.Spec = CLISpec{
+		Inputs: s.Spec.Inputs,
+		Output: s.Spec.Output,
 	}
 
 	// TODO: Add validation
@@ -41,17 +39,20 @@ func (sc *ScenarioCLI) FromScenario(s *Scenario) error {
 	return nil
 }
 
-func (sc *ScenarioCLI) Run(url string, output *CLIOutputData) error {
+func (sc *ScenarioCLI) Run(url string) (CLIOutputData, error) {
+	output := CLIOutputData(string(""))
+
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(nil))
 	if err != nil {
-		return errors.Join(errCall, err)
+		return output, errors.Join(errCall, err)
 	}
-	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return errors.Join(errReadResponse, err)
+		return output, errors.Join(errReadResponse, err)
 	}
+
+	_ = resp.Body.Close()
 
 	// if err := json.Unmarshal(body, &output); err != nil {
 	// 	return errors.Join(errParseResponse, err)
@@ -60,8 +61,7 @@ func (sc *ScenarioCLI) Run(url string, output *CLIOutputData) error {
 	fmt.Println(resp.StatusCode)
 	fmt.Printf("%s", string(body[:]))
 
-	tmp := CLIOutputData(string(body[:]))
-	output = &tmp
+	output = CLIOutputData(string(body[:]))
 
-	return nil
+	return output, nil
 }
