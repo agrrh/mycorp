@@ -57,6 +57,7 @@ func (sc *ScenarioCLI) Run(url string, output *CLIOutputData) error {
 	// 	return errors.Join(errParseResponse, err)
 	// }
 
+	fmt.Println(resp.StatusCode)
 	fmt.Printf("%s", string(body[:]))
 
 	tmp := CLIOutputData(string(body[:]))
