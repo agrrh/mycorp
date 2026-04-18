@@ -2,7 +2,24 @@
 version: "3"
 
 tasks:
+  check:fmt:
+    cmd: go fmt ./...
+
+  check:vet:
+    cmd: go vet ./...
+
+  check:lint:
+    cmd: golangci-lint run
+
+  check:
+    deps:
+      - check:fmt
+      - check:vet
+      - check:lint
+
   server:run:
+    deps:
+      - check
     cmd: >-
       air \
         --build.cmd "go build -o tmp/server cmd/server/main.go" \
@@ -12,6 +29,8 @@ tasks:
     desc: Run local server
 
   client:test:
+    deps:
+      - check
     env:
       MYCORP_CLI_URL: http://127.0.0.1:8080
     cmd: >-
