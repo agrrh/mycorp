@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/agrrh/mycorp/internal/modules"
-	httpModule "github.com/agrrh/mycorp/internal/modules/http"
-	"github.com/agrrh/mycorp/internal/scenario"
+	"github.com/agrrh/mycorp/internal/domain/modules"
+	httpModule "github.com/agrrh/mycorp/internal/domain/modules/http"
+	"github.com/agrrh/mycorp/internal/domain/scenario"
 )
 
 type Worker struct{}

@@ -8,8 +8,8 @@ import (
 	"github.com/ledongthuc/goterators"
 	"github.com/spf13/cobra"
 
-	"github.com/agrrh/mycorp/internal/scenario"
-	"github.com/agrrh/mycorp/internal/scenario/store"
+	"github.com/agrrh/mycorp/internal/domain/scenario"
+	"github.com/agrrh/mycorp/internal/domain/scenario_store"
 )
 
 func main() {
@@ -26,7 +26,7 @@ func main() {
 
 	scenariosURL := fmt.Sprintf("%s/scenarios", baseURL)
 
-	scStore := store.NewCLI(scenariosURL)
+	scStore := scenario_store.NewCLI(scenariosURL)
 
 	if err := scStore.Fetch(); err != nil {
 		log.Fatal(err)

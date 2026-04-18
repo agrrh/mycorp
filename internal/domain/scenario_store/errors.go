@@ -1,4 +1,4 @@
-package store
+package scenario_store
 
 import (
 	"errors"

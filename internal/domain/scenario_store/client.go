@@ -1,4 +1,4 @@
-package store
+package scenario_store
 
 import (
 	"encoding/json"
@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/agrrh/mycorp/internal/scenario"
+	"github.com/agrrh/mycorp/internal/domain/scenario"
 )
 
 type ScenarioStoreCLI struct {

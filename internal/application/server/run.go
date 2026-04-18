@@ -1,4 +1,4 @@
-package handlers
+package server
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"github.com/agrrh/mycorp/internal/worker"
+	"github.com/agrrh/mycorp/internal/domain/worker"
 )
 
 func (h *Handler) Run(ctx echo.Context) error {

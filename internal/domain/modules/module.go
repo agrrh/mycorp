@@ -3,7 +3,7 @@ package modules
 import (
 	"context"
 
-	"github.com/agrrh/mycorp/internal/scenario"
+	"github.com/agrrh/mycorp/internal/domain/scenario"
 )
 
 // TODO: Move those 2 to some ScenarioRunner package

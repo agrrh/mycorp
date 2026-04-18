@@ -1,4 +1,4 @@
-package metadata
+package scenario
 
 import "fmt"
 
@@ -8,10 +8,10 @@ type Metadata struct {
 	Namespace string `yaml:"namespace" json:"namespace"`
 }
 
-func (sm *Metadata) GetFullName() string {
-	return fmt.Sprintf("%s/%s", sm.Namespace, sm.Name)
+func (m *Metadata) GetFullName() string {
+	return fmt.Sprintf("%s/%s", m.Namespace, m.Name)
 }
 
-func (sm *Metadata) GetName() string {
-	return sm.Name
+func (m *Metadata) GetName() string {
+	return m.Name
 }

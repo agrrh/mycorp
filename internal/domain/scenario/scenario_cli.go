@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-
-	"github.com/agrrh/mycorp/internal/metadata"
 )
 
 var (
@@ -17,8 +15,8 @@ var (
 )
 
 type ScenarioCLI struct {
-	Metadata metadata.Metadata `yaml:"metadata" json:"metadata"`
-	Spec     CLISpec           `yaml:"spec" json:"spec"`
+	Metadata Metadata `yaml:"metadata" json:"metadata"`
+	Spec     CLISpec  `yaml:"spec" json:"spec"`
 }
 
 type CLISpec struct {
@@ -28,6 +26,20 @@ type CLISpec struct {
 
 // Static output or variables for templated `SpecOutput` string
 type CLIOutputData string
+
+func (sc *ScenarioCLI) FromScenario(s *Scenario) error {
+	sc = &ScenarioCLI{
+		Metadata: s.Metadata,
+		Spec: CLISpec{
+			Inputs: s.Spec.Inputs,
+			Output: s.Spec.Output,
+		},
+	}
+
+	// TODO: Add validation
+
+	return nil
+}
 
 func (sc *ScenarioCLI) Run(url string, output *CLIOutputData) error {
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(nil))

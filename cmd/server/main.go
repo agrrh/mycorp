@@ -11,8 +11,8 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
-	handlerScenarios "github.com/agrrh/mycorp/internal/handlers/scenarios"
-	"github.com/agrrh/mycorp/internal/scenario/store"
+	server "github.com/agrrh/mycorp/internal/application/server"
+	"github.com/agrrh/mycorp/internal/domain/scenario_store"
 )
 
 func main() {
@@ -21,13 +21,13 @@ func main() {
 		scenarioDir = "./scenarios"
 	}
 
-	scStore := store.New(scenarioDir)
+	scStore := scenario_store.New(scenarioDir)
 
 	if err := scStore.Load(); err != nil {
 		log.Fatal(err)
 	}
 
-	scHandler := handlerScenarios.Handler{
+	sHandler := server.Handler{
 		ScStore: scStore,
 	}
 
@@ -39,10 +39,10 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// Routes
-	e.GET("/scenarios", scHandler.List)
-	e.GET("/scenarios/:namespace", scHandler.ListByNamespace)
-	e.GET("/scenarios/:namespace/:name/_cli", scHandler.GetCLI)
-	e.POST("/scenarios/:namespace/:name", scHandler.Run)
+	e.GET("/scenarios", sHandler.List)
+	e.GET("/scenarios/:namespace", sHandler.ListByNamespace)
+	e.GET("/scenarios/:namespace/:name/_cli", sHandler.GetCLI)
+	e.POST("/scenarios/:namespace/:name", sHandler.Run)
 
 	// Start server
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)

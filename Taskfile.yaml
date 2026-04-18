@@ -10,3 +10,10 @@ tasks:
         --build.include_dir "cmd,internal,pkg,scenarios" \
         --build.include_ext "go,tpl,tmpl,html,yaml"
     desc: Run local server
+
+  client:test:
+    env:
+      MYCORP_CLI_URL: http://127.0.0.1:8080
+    cmd: >-
+      go run cmd/client/main.go \
+        dns create

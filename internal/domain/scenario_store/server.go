@@ -1,4 +1,4 @@
-package store
+package scenario_store
 
 import (
 	"log"
@@ -8,7 +8,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"github.com/agrrh/mycorp/internal/scenario"
+	"github.com/agrrh/mycorp/internal/domain/scenario"
 )
 
 type ScenarioStore struct {
