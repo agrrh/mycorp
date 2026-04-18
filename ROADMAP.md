@@ -2,7 +2,7 @@
 
 - [x] Disable push to master, switch to PR-based workflow
 
-- [ ] Code linting and formatting
+- [x] Code linting and formatting
 - [ ] Add CI/CD
 
 - [ ] Add scenario validation
