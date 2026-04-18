@@ -67,11 +67,7 @@ func main() {
 			cmd.Run = func(cmd *cobra.Command, args []string) {
 				fmt.Printf("Executing %s ...\n\n", sc.Metadata.GetFullName())
 
-				var output string
-				err := sc.Run(
-					fmt.Sprintf("%s/%s", scenariosURL, sc.Metadata.GetFullName()),
-					(*scenario.CLIOutputData)(&output),
-				)
+				output, err := sc.Run(fmt.Sprintf("%s/%s", scenariosURL, sc.Metadata.GetFullName()))
 				if err != nil {
 					fmt.Printf("Error running command %s: %s\n", sc.Metadata.GetFullName(), err)
 					os.Exit(1)
