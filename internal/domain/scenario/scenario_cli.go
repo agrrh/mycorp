@@ -9,9 +9,9 @@ import (
 )
 
 var (
-	errCall         error = errors.New("Error calling scenario")
-	errReadResponse error = errors.New("Error reading scenario call response")
-	// errParseResponse error = errors.New("Error parsing scenario call response")
+	errCall         error = errors.New("error calling scenario")
+	errReadResponse error = errors.New("error reading scenario call response")
+	// errParseResponse error = errors.New("error parsing scenario call response")
 )
 
 type ScenarioCLI struct {

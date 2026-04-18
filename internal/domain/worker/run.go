@@ -11,8 +11,8 @@ import (
 )
 
 var (
-	errUnknownModule  error = errors.New("Unknown module")
-	errNotImplemented error = errors.New("Not Implemented")
+	errUnknownModule  error = errors.New("unknown module")
+	errNotImplemented error = errors.New("not Implemented")
 )
 
 type Worker struct{}
