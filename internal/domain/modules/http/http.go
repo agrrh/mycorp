@@ -43,12 +43,13 @@ func (m *HttpModule) Run(ctx context.Context, stepName string, scInputs scenario
 	if err != nil {
 		return results, err
 	}
-	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return results, err
 	}
+
+	_ = resp.Body.Close()
 
 	results["code"] = resp.StatusCode
 	results["body"] = string(body)

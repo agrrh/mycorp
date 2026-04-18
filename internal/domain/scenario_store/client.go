@@ -33,12 +33,13 @@ func (ssc *ScenarioStoreCLI) Fetch() error {
 	if err != nil {
 		return errors.Join(errFetch, err)
 	}
-	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return errors.Join(errReadResponse, err)
 	}
+
+	_ = resp.Body.Close()
 
 	var scenarios []string
 	if err := json.Unmarshal(body, &scenarios); err != nil {
@@ -52,12 +53,13 @@ func (ssc *ScenarioStoreCLI) Fetch() error {
 		if err != nil {
 			return errors.Join(errObtainSpecificScenario, errFetch, err)
 		}
-		defer resp.Body.Close()
 
 		body, err := io.ReadAll(resp.Body)
 		if err != nil {
 			return errors.Join(errObtainSpecificScenario, errReadResponse, err)
 		}
+
+		_ = resp.Body.Close()
 
 		var sc scenario.ScenarioCLI
 		if err := json.Unmarshal(body, &sc); err != nil {

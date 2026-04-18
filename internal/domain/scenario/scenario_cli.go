@@ -46,12 +46,13 @@ func (sc *ScenarioCLI) Run(url string, output *CLIOutputData) error {
 	if err != nil {
 		return errors.Join(errCall, err)
 	}
-	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return errors.Join(errReadResponse, err)
 	}
+
+	_ = resp.Body.Close()
 
 	// if err := json.Unmarshal(body, &output); err != nil {
 	// 	return errors.Join(errParseResponse, err)
