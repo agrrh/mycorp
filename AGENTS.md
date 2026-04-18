@@ -18,12 +18,17 @@ Those Scenarios are owned by Operators (platform engineers) and managed as decla
 ## Project Structure
 
 ```
-├── cmd/
-│   ├── client/           # Command-line interface for Users
-│   └── server/           # Control center API which serves scenarios written by Operators
-├── internal/             # Internal models, services, utility packages
-├── pkg/                  # Public packages (e.g. models)
-└── scenarios/            # Scnearios examples
+├── cmd
+│   ├── client                # Command-line interface for Users
+│   └── server                # REST API which serve and run scenarios written by Operators
+├── internal
+│   ├── application
+│   │   └── server            # REST API Handlers
+│   ├── domain                # Domain business logic
+│   │   └── modules           # Specific modules
+│   └── infrastructure        # Database connectors etc.
+├── scenarios                 # Scenario examples
+└── tmp
 ```
 
 ## Running
