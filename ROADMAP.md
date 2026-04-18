@@ -6,27 +6,29 @@
 - [x] Add Dockerfile
 - [x] Add CI/CD builds
 
-- [ ] Add scenario validation
-- [ ] API parameter type handling
+- [ ] Implement `command` module for direct command execution
+
+- [ ] Secure CLI calls with token
 
 - [ ] Implement templated output
 - [ ] Formatted scenario execution result output
 - [ ] JSON serialization in scenario execution response
 
-- [ ] Implement `command` module for direct command execution
-- [ ] Implement `git` module for remote codebase operations
+- [ ] Add scenario validation
+- [ ] API parameter type handling
 
-- [ ] Implement SSO authentication
+- [ ] Implement `git` module for remote codebase operations
 
 - [ ] Generate Kubernetes CRD
 - [ ] Retrieve scenarios from CRD
 
-- [ ] Local execution support?
 
-- [ ] Add e2e tests
-
-- [ ] Add documentation
+- [ ] Implement SSO authentication
+- [ ] Secure CLI calls with certs
 
 - [ ] Add support for scenario aliases
 - [ ] Generate command usage descriptions
+- [ ] Local execution support?
+- [ ] Add e2e tests
+- [ ] Add documentation
 - [ ] Support external modules
