@@ -4,6 +4,7 @@
 
 - [x] Code linting and formatting
 - [ ] Add CI/CD
+- [x] Add Dockerfile
 
 - [ ] Add scenario validation
 - [ ] API parameter type handling
@@ -22,8 +23,6 @@
 
 - [ ] Local execution support?
 
-
-- [ ] Add Dockerfile
 - [ ] Add e2e tests
 
 - [ ] Add documentation
