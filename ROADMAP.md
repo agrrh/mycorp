@@ -6,7 +6,7 @@
 - [x] Add Dockerfile
 - [x] Add CI/CD builds
 
-- [ ] Implement `command` module for direct command execution
+- [x] Implement `command` module for direct command execution
 
 - [ ] Secure CLI calls with token
 
