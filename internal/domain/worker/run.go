@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/agrrh/mycorp/internal/domain/modules"
+	commandModule "github.com/agrrh/mycorp/internal/domain/modules/command"
 	httpModule "github.com/agrrh/mycorp/internal/domain/modules/http"
 	"github.com/agrrh/mycorp/internal/domain/scenario"
 )
@@ -34,8 +35,7 @@ func (w *Worker) GetModule(moduleType string) (modules.Module, error) {
 		// TODO: yaml module implementation
 		return nil, errNotImplemented
 	case "command":
-		// TODO: command module implementation
-		return nil, errNotImplemented
+		return commandModule.New(), nil
 	default:
 		// Для demo по умолчанию возвращаем http module
 		return nil, errUnknownModule

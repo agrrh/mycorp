@@ -35,6 +35,16 @@ spec:
       params:
         url: http://example.com/absent
 
+    # Execute command
+    - name: Execute command
+      module: command
+      params:
+        pwd: /tmp
+        timeout: 1s
+        cmd: echo
+        args:
+          - hello world
+
   output: |-
     Created PR for requested DNS record:
         https://github.com/kelseyhightower/nocode/pull/105
