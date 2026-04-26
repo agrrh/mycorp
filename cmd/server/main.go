@@ -18,7 +18,7 @@ import (
 func main() {
 	scenarioDir := os.Getenv("SCENARIO_DIR")
 	if scenarioDir == "" {
-		scenarioDir = "./scenarios"
+		scenarioDir = "./examples/scenarios"
 	}
 
 	scStore := scenario_store.New(scenarioDir)
