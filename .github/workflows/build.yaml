@@ -3,27 +3,22 @@
 name: backend
 
 on:
-  # schedule:
-  #   - cron: "0 10 * * *"
   push:
-    # branches:
-    #   - "**"
     tags:
       - "v*.*.*"
   pull_request:
     branches:
-      - "master"
+      - master
     paths:
       - Dockerfile
       - go.mod
       - go.sum
       - "**.go"
-      - "**.yaml"
+      # - ".github/**.yaml"
 
 jobs:
   docker:
     name: Build
-    # runs-on: self-hosted
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
