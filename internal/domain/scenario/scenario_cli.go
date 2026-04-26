@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 )
 
 var (
@@ -42,7 +43,22 @@ func (sc *ScenarioCLI) FromScenario(s *Scenario) error {
 func (sc *ScenarioCLI) Run(url string) (CLIOutputData, error) {
 	output := CLIOutputData(string(""))
 
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(nil))
+	// TODO: Move reading auth var to common package
+	authToken := os.Getenv("MYCORP_TOKEN")
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(nil))
+	if err != nil {
+		return output, errors.Join(errCall, err)
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+
+	if authToken != "" {
+		req.Header.Set("X-Token", authToken)
+	}
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
 	if err != nil {
 		return output, errors.Join(errCall, err)
 	}
