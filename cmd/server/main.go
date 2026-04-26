@@ -13,6 +13,7 @@ import (
 
 	"github.com/agrrh/mycorp/internal/application/server/config"
 	"github.com/agrrh/mycorp/internal/application/server/handlers"
+	customMiddleware "github.com/agrrh/mycorp/internal/application/server/middleware"
 	"github.com/agrrh/mycorp/internal/domain/scenario_store"
 )
 
@@ -46,11 +47,14 @@ func main() {
 	e.Use(middleware.RequestLogger())
 	// e.Use(middleware.RemoveTrailingSlash())
 	e.Use(middleware.Recover())
+	e.Use(customMiddleware.InjectServerConfig(*cfg))
 
 	// Routes
 	scenarios := e.Group("/scenarios")
 
 	// TODO: Use SSO authentication
+	scenarios.Use(customMiddleware.AuthTokens)
+
 	scenarios.GET("/", sHandler.List)
 	scenarios.GET("/:namespace", sHandler.ListByNamespace)
 	scenarios.GET("/:namespace/:name/_cli", sHandler.GetCLI)
