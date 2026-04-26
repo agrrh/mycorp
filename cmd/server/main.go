@@ -42,18 +42,19 @@ func main() {
 		ScStore: scStore,
 	}
 
-	// TODO: Add SSO authentication
-
 	e := echo.New()
 	e.Use(middleware.RequestLogger())
 	// e.Use(middleware.RemoveTrailingSlash())
 	e.Use(middleware.Recover())
 
 	// Routes
-	e.GET("/scenarios", sHandler.List)
-	e.GET("/scenarios/:namespace", sHandler.ListByNamespace)
-	e.GET("/scenarios/:namespace/:name/_cli", sHandler.GetCLI)
-	e.POST("/scenarios/:namespace/:name", sHandler.Run)
+	scenarios := e.Group("/scenarios")
+
+	// TODO: Use SSO authentication
+	scenarios.GET("/", sHandler.List)
+	scenarios.GET("/:namespace", sHandler.ListByNamespace)
+	scenarios.GET("/:namespace/:name/_cli", sHandler.GetCLI)
+	scenarios.POST("/:namespace/:name", sHandler.Run)
 
 	// Start server
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
