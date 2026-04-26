@@ -17,6 +17,8 @@
 - [ ] Add scenario validation
 - [ ] API parameter type handling
 
+- [ ] Allow setting env vars prefix (e.g. `GOOGLE_` instead of `MYCORP_`)
+
 - [ ] Implement `git` module for remote codebase operations
 
 - [ ] Generate Kubernetes CRD
