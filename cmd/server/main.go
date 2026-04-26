@@ -11,14 +11,26 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
-	server "github.com/agrrh/mycorp/internal/application/server"
+	"github.com/agrrh/mycorp/internal/application/server/config"
+	"github.com/agrrh/mycorp/internal/application/server/handlers"
+	customMiddleware "github.com/agrrh/mycorp/internal/application/server/middleware"
 	"github.com/agrrh/mycorp/internal/domain/scenario_store"
 )
 
 func main() {
+	configPath := os.Getenv("CONFIG_PATH")
+	if configPath == "" {
+		configPath = "./examples/server.config.yaml"
+	}
+
+	cfg, err := config.Load(configPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	scenarioDir := os.Getenv("SCENARIO_DIR")
 	if scenarioDir == "" {
-		scenarioDir = "./scenarios"
+		scenarioDir = "./examples/scenarios"
 	}
 
 	scStore := scenario_store.New(scenarioDir)
@@ -27,22 +39,26 @@ func main() {
 		log.Fatal(err)
 	}
 
-	sHandler := server.Handler{
+	sHandler := handlers.Handler{
 		ScStore: scStore,
 	}
-
-	// TODO: Add SSO authentication
 
 	e := echo.New()
 	e.Use(middleware.RequestLogger())
 	// e.Use(middleware.RemoveTrailingSlash())
 	e.Use(middleware.Recover())
+	e.Use(customMiddleware.InjectServerConfig(*cfg))
 
 	// Routes
-	e.GET("/scenarios", sHandler.List)
-	e.GET("/scenarios/:namespace", sHandler.ListByNamespace)
-	e.GET("/scenarios/:namespace/:name/_cli", sHandler.GetCLI)
-	e.POST("/scenarios/:namespace/:name", sHandler.Run)
+	scenarios := e.Group("/scenarios")
+
+	// TODO: Use SSO authentication
+	scenarios.Use(customMiddleware.AuthTokens)
+
+	scenarios.GET("/", sHandler.List)
+	scenarios.GET("/:namespace", sHandler.ListByNamespace)
+	scenarios.GET("/:namespace/:name/_cli", sHandler.GetCLI)
+	scenarios.POST("/:namespace/:name", sHandler.Run)
 
 	// Start server
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
