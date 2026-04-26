@@ -11,11 +11,22 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
+	"github.com/agrrh/mycorp/internal/application/server/config"
 	"github.com/agrrh/mycorp/internal/application/server/handlers"
 	"github.com/agrrh/mycorp/internal/domain/scenario_store"
 )
 
 func main() {
+	configPath := os.Getenv("CONFIG_PATH")
+	if configPath == "" {
+		configPath = "./examples/server.config.yaml"
+	}
+
+	cfg, err := config.Load(configPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	scenarioDir := os.Getenv("SCENARIO_DIR")
 	if scenarioDir == "" {
 		scenarioDir = "./examples/scenarios"
