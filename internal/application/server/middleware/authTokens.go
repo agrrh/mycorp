@@ -15,7 +15,6 @@ var (
 	errFailedToLoadServerConfig error = errors.New("could not load server config from context")
 )
 
-// ServerHeader middleware adds a `Server` header to the response.
 func AuthTokens(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		serverConfig, ok := ctx.Get("config").(config.Config)
