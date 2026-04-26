@@ -44,5 +44,5 @@ SCENARIO_DIR="$(pwd)/scenarios" air --build.cmd "go build -o tmp/server cmd/serv
 Expected API is available at [http://127.0.0.1:8080](http://127.0.0.1:8080):
 
 ```sh
-MYCORP_CLI_URL="http://127.0.0.1:8080" go run ./cmd/client dns create --zone example.org
+MYCORP_CLI_URL="http://127.0.0.1:8080" MYCORP_TOKEN="example" go run ./cmd/client dns create --zone example.org
 ```

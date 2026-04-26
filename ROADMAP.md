@@ -8,7 +8,7 @@
 
 - [x] Implement `command` module for direct command execution
 
-- [ ] Secure CLI calls with token
+- [x] Secure CLI calls with token
 
 - [ ] Implement templated output
 - [ ] Formatted scenario execution result output
