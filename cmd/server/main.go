@@ -11,7 +11,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
-	server "github.com/agrrh/mycorp/internal/application/server"
+	"github.com/agrrh/mycorp/internal/application/server/handlers"
 	"github.com/agrrh/mycorp/internal/domain/scenario_store"
 )
 
@@ -27,7 +27,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	sHandler := server.Handler{
+	sHandler := handlers.Handler{
 		ScStore: scStore,
 	}
 
