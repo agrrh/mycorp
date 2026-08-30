@@ -10,7 +10,8 @@
 
 - [x] Secure CLI calls with token
 
-- [ ] Implement templated output
+- [ ] Implement Job templated output so CLI would print dynamic responses
+
 - [ ] Formatted scenario execution result output
 - [ ] JSON serialization in scenario execution response
 
