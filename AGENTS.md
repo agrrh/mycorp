@@ -46,3 +46,7 @@ Expected API is available at [http://127.0.0.1:8080](http://127.0.0.1:8080):
 ```sh
 MYCORP_CLI_URL="http://127.0.0.1:8080" MYCORP_TOKEN="example" go run ./cmd/client dns create --zone example.org
 ```
+
+## Additional info
+
+Evade using `git` command, it is forbidden.
