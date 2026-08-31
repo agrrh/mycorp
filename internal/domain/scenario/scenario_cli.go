@@ -2,17 +2,17 @@ package scenario
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"net/http"
 	"os"
 )
 
 var (
-	errCall         error = errors.New("error calling scenario")
-	errReadResponse error = errors.New("error reading scenario call response")
-	// errParseResponse error = errors.New("error parsing scenario call response")
+	errCall          error = errors.New("error calling scenario")
+	errReadResponse  error = errors.New("error reading scenario call response")
+	errParseResponse error = errors.New("error parsing scenario call response")
 )
 
 type ScenarioCLI struct {
@@ -70,14 +70,21 @@ func (sc *ScenarioCLI) Run(url string) (CLIOutputData, error) {
 
 	_ = resp.Body.Close()
 
-	// if err := json.Unmarshal(body, &output); err != nil {
-	// 	return errors.Join(errParseResponse, err)
-	// }
+	var runResp ScenarioRunResponse
+	if err := json.Unmarshal(body, &runResp); err != nil {
+		output = CLIOutputData(string(body))
+		return output, errors.Join(errParseResponse, err)
+	}
 
-	fmt.Println(resp.StatusCode)
-	fmt.Printf("%s", string(body[:]))
+	if !runResp.Success {
+		return output, errors.New(string(runResp.Output))
+	}
 
-	output = CLIOutputData(string(body[:]))
+	// DEBUG: check server response
+	// fmt.Println(resp.StatusCode)
+	// fmt.Printf("%s", runResp)
+
+	output = CLIOutputData(string(runResp.Output))
 
 	return output, nil
 }
