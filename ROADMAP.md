@@ -20,7 +20,7 @@
 - [x] Add scenario validation
 <!-- - [ ] API parameter type handling (what meant here?) -->
 
-- [ ] Implement `git` module for remote codebase operations
+- [ ] Implement `git-clone` module to clone git repositories
 
 - [ ] Generate Kubernetes CRD for Scenario
 - [ ] Server retrieves scenarios from Kubernetes Scenario resource
