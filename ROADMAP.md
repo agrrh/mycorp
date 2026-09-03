@@ -15,16 +15,15 @@
 - [x] Formatted scenario execution result output
 - [x] JSON serialization in scenario execution response
 
-- [x] Add scenario validation
-- [ ] API parameter type handling
-
 - [ ] Allow setting env vars prefix (e.g. `GOOGLE_` instead of `MYCORP_`)
+
+- [x] Add scenario validation
+<!-- - [ ] API parameter type handling (what meant here?) -->
 
 - [ ] Implement `git` module for remote codebase operations
 
-- [ ] Generate Kubernetes CRD
-- [ ] Retrieve scenarios from CRD
-
+- [ ] Generate Kubernetes CRD for Scenario
+- [ ] Server retrieves scenarios from Kubernetes Scenario resource
 
 - [ ] Implement SSO authentication
 - [ ] Secure CLI calls with certs
