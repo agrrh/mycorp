@@ -59,7 +59,10 @@ func (ss *ScenarioStore) Load() error {
 			return errDuplicateScenarios
 		}
 
-		// TODO: Validate scenario itself (input variable types etc.)
+		if err := sc.Validate(); err != nil {
+			log.Printf("failed to validate %s: %v", e.Name(), err)
+			continue
+		}
 
 		ss.Scenarios[key] = sc
 		log.Printf("loaded scenario %s", key)
