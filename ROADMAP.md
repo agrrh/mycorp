@@ -15,7 +15,7 @@
 - [x] Formatted scenario execution result output
 - [x] JSON serialization in scenario execution response
 
-- [ ] Allow setting env vars prefix (e.g. `GOOGLE_` instead of `MYCORP_`)
+- [x] Allow setting env vars prefix (e.g. `GOOGLE_` instead of `MYCORP_`)
 
 - [x] Add scenario validation
 <!-- - [ ] API parameter type handling (what meant here?) -->

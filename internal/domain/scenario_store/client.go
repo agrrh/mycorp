@@ -10,6 +10,7 @@ import (
 	"os"
 
 	"github.com/agrrh/mycorp/internal/domain/scenario"
+	"github.com/agrrh/mycorp/internal/infrastructure/env"
 )
 
 type ScenarioStoreCLI struct {
@@ -100,7 +101,7 @@ func (ssc *ScenarioStoreCLI) List() []*scenario.ScenarioCLI {
 }
 
 func prepareRequest(method, url string) (*http.Request, error) {
-	authToken := os.Getenv("MYCORP_TOKEN")
+	authToken := env.GetWithPrefix("TOKEN")
 
 	req, err := http.NewRequest(method, url, bytes.NewBuffer(nil))
 	if err != nil {

@@ -10,6 +10,7 @@ import (
 
 	"github.com/agrrh/mycorp/internal/domain/scenario"
 	"github.com/agrrh/mycorp/internal/domain/scenario_store"
+	"github.com/agrrh/mycorp/internal/infrastructure/env"
 )
 
 func main() {
@@ -18,9 +19,9 @@ func main() {
 		Short: "MyCorp CLI Tool",
 	}
 
-	baseURL := os.Getenv("MYCORP_CLI_URL")
+	baseURL := env.GetWithPrefix("CLI_URL")
 	if baseURL == "" {
-		fmt.Fprintf(os.Stderr, "Environment variable MYCORP_CLI_URL is required\n")
+		fmt.Fprintf(os.Stderr, "Environment variable with prefix is required (e.g. MYCORP_CLI_URL)\n")
 		os.Exit(1)
 	}
 

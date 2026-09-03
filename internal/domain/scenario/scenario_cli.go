@@ -7,6 +7,8 @@ import (
 	"io"
 	"net/http"
 	"os"
+
+	"github.com/agrrh/mycorp/internal/infrastructure/env"
 )
 
 var (
@@ -44,7 +46,7 @@ func (sc *ScenarioCLI) Run(url string) (CLIOutputData, error) {
 	output := CLIOutputData(string(""))
 
 	// TODO: Move reading auth var to common package
-	authToken := os.Getenv("MYCORP_TOKEN")
+	authToken := env.GetWithPrefix("TOKEN")
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(nil))
 	if err != nil {
