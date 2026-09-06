@@ -47,6 +47,7 @@ func main() {
 	e.Use(middleware.RequestLogger())
 	// e.Use(middleware.RemoveTrailingSlash())
 	e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
 	e.Use(customMiddleware.InjectServerConfig(*cfg))
 
 	// Routes
