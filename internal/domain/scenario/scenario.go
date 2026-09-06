@@ -9,6 +9,7 @@ import (
 var validate = validator.New()
 
 func init() {
+	// FIXME: this validation is broken, to rework
 	validate.RegisterValidation("inputParamCheck", func(fl validator.FieldLevel) bool {
 		// fl.Parent() returns the struct containing the field
 		param, ok := fl.Parent().Interface().(SpecInputParameter)
@@ -30,10 +31,11 @@ func init() {
 				_, isValid = actualValue.(bool)
 			case "float":
 				_, isValid = actualValue.(float64)
+			case "enum":
+				// TODO: check enum
+				return true
 			default:
-				// If type is unknown, we might want to allow it or fail.
-				// For now, let's just allow unknown types.
-				isValid = true
+				_, isValid = actualValue.(string)
 			}
 
 			if !isValid {

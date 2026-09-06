@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
+	// "os"
 
 	"github.com/agrrh/mycorp/internal/domain/scenario"
 	"github.com/agrrh/mycorp/internal/infrastructure/env"
