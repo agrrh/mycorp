@@ -8,14 +8,15 @@ tasks:
   check:vet:
     cmd: go vet ./...
 
-  check:lint:
-    cmd: golangci-lint run
+  # TODO: not usable with next golang verison, to fix
+  # check:lint:
+  #   cmd: golangci-lint run
 
   check:
     deps:
       - check:fmt
       - check:vet
-      - check:lint
+      # - check:lint
 
   server:build:ci:
     deps:
